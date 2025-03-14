@@ -1,0 +1,13 @@
+Създайте директорията practice/01 във вашата home директория.
+Създайте 3 файла в нея - f1, f2, f3.
+Копирайте файловете f1, f2, f3 от директорията practice/01/ в директория dir1, намираща се във вашата home директория. Ако нямате такава, създайте я.
+
+mkdir -p practise/01
+mkdir ~/dir1
+cd ./practise/01
+touch f1
+touch f2
+touch f3
+cp f1 ~/dir1
+cp f2 ~/dir1
+cp f3 ~/dir1

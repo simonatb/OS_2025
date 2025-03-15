@@ -2,4 +2,4 @@
 които имат write права за достъп за група или за останалите(o=w)
 
 id //to get my group
-find /tmp -group 512 -perm o=w
+find /tmp -group 512 -perm o=w,g=w

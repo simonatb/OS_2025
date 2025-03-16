@@ -9,7 +9,7 @@
   - l \- symbolic link
   - d \- directory
   - f \- ordinary file
-    - find ~ -type f,d == find ~ -type f -o -type d
+    > find ~ -type f,d == find ~ -type f -o -type d
 -perm - permission
   - /222 - поне някое от тях трябва да е изпълнено
   - -222 - всяко от тях трябва да е изпълнено
@@ -32,5 +32,5 @@
 ### How - what to do with the files
 - exec \<command\> '{}' ';'
 - printf - приема формат
-   - find ~ -type f -printf '%i/n'
+    > find ~ -type f -printf '%i/n'
 

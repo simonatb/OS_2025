@@ -1,0 +1,6 @@
+Запазете само потребителските имена от 
+/etc/passwd във файл users във вашата home директория.
+
+echo "$(cut /etc/passwd -f 1 -d ':')" > users
+//
+cat /etc/passwd | cut -f 1 -d ':' > ~/users

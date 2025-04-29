@@ -27,6 +27,9 @@ int main(void) {
 - stdio.h - printf
 - unistd.h - getuid,geteuid
 - sys/types.h - uid_t
+- fcntl.h - open
+- err.h - err
+- errno.h - errno
 
 ### Структури
 Като отделен типов синоним
@@ -89,9 +92,53 @@ return 0; // exit status 0
 ### exit() - вътрешно вика _exit(2) , но финализира и някои други неща преди това (Използвайте нея, когато искате да прекратите програмата)
 
 ## Обработване на грешки при системни извиквания
+- По конвенция, повечето системни извиквания връщат резултат от
+числов тип, който е отрицателно число, ако извикването е било
+неуспешно
 
+### errno
+при неуспех системните извиквания записват число (код на
+грешка) в глобалната променлива errno; 
+Можем да използваме errno, за да разберем каква е била грешката:
+```
+#include <fcntl.h> // open
+#include <errno.h> // errno
+#include <stdlib.h> // exit
 
+int main() {
+int result = open("/tmp/some_file", O_RDONLY);
+if (result < 0) {
+switch (errno) {
+case 2: tell_user("no such file\n"); break; // 2 -ENOENT
+case 13: tell_user("permission denied\n"); break; // 13 - EACCES
+// ...
+  }
+exit(1);
+}
 
+tell_user("opened /tmp/some_file successfully\n");
+}
+```
+### err.h
+
+Ако просто искаме да изведем съобщение за грешка до потребителя и да
+прекратим програмата, най-добре е да използваме функцията err() от
+err(3) , която изписва форматирано съобщение за грешка (вътрешно гледа
+променливата errno).
+Първият аргумент на err() е exit status, с който да прекрати програмата.
+```
+#include <fcntl.h> // open
+#include <err.h> // err
+
+int main() {
+int result = open("/tmp/some_file", O_RDONLY);
+if (result < 0) {
+err(1, "could not open file");
+}
+
+tell_user("opened /tmp/some_file successfully\n");
+}
+```
 
 
 
